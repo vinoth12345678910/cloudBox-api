@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  backend:
+    build: ./server
+    container_name: drive_backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    volumes:
+      - ./server:/usr/src/app
+
+  mongo:
+    image: mongo:6
+    container_name: drive_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo_data: 
