@@ -5,7 +5,10 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 const connectDB = async () => {
   try {
@@ -13,7 +16,6 @@ const connectDB = async () => {
     console.log("MongoDB connected successfully");
   } catch (error) {
     console.error("MongoDB connection error:", error);
-    // Don't exit in production, keep retrying
     setTimeout(connectDB, 5000);
   }
 };
